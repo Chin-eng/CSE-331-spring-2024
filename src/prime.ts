@@ -49,7 +49,12 @@ export const numDivisors = (n: bigint): bigint => {
  */
 const numDivisorsHelper = (n: bigint, m: bigint): bigint => {
   // TODO: implement this recursively
-  return 0n;
+  if (m == 0n) {
+    return 0n; 
+  } else {
+    const isDivisor = n % m === 0n ? 1n : 0n;
+    return isDivisor + numDivisorsHelper(n, m-1n);
+  }
 };
 
 
@@ -61,12 +66,15 @@ const numDivisorsHelper = (n: bigint, m: bigint): bigint => {
 export const maxNumDivisors = (n: bigint): bigint => {
   if (n < 1n) {
     throw new Error('n must be positive');
+  } else if (n === 1n) { 
+    return 1n;
   } else {
-    // TODO: implement this recursively
-    // (do not call any functions other than this one and numDivisors)
-    return 0n;
+    const currentDivisor = numDivisors(n);
+    const maxDivisorOfSmallerNumbers = maxNumDivisors(n -1n);
+    return currentDivisor > maxDivisorOfSmallerNumbers ? currentDivisor : maxDivisorOfSmallerNumbers;
   }
 }
+
 
 
 /**

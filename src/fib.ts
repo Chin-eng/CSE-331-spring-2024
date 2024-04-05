@@ -12,7 +12,8 @@ export const fib = (n: bigint): bigint => {
   } else if (n === 1n) {
     return 1n;
   } else {
-    return fib(n - 1n) + fib(n - 2n);
+    const pair = fastFib(n);
+    return pair.curFib;
   }
 };
 
@@ -27,7 +28,19 @@ export type FibPair = {curFib: bigint, prevFib: bigint};
  */
 export const fastFib = (n: bigint): FibPair => {
   // TODO: implement this in problem 1
-  throw new Error(`fastFib(${n}) is not yet implemented`);
+  if (n === 0n) {
+    return {curFib:0n, prevFib: 0n}
+  }
+
+  else if (n ===1n) {
+    return {curFib: 1n, prevFib: 0n}
+  }
+
+  else {
+    const prevFair = fastFib(n-1n);
+    const curFib = prevFair.curFib + prevFair.prevFib;
+    return {curFib, prevFib: prevFair.curFib}
+  }
 };
 
 
@@ -41,7 +54,19 @@ export type FibPair2 = [bigint, bigint];
  */
 export const fastFib2 = (n: bigint): FibPair2 => {
   // TODO: implement this in problem 3
-  throw new Error(`fastFib2(${n}) is not yet implemented`);
+  if (n === 0n) {
+    return [0n, 0n];
+  }
+
+  else if (n === 1n) {
+    return [0n, 1n];
+  }
+
+  else {
+    const prevFair = fastFib2(n-1n);
+    const curFib = prevFair[0] + prevFair[1];
+    return [prevFair[1], curFib];
+  }
 };
 
 
@@ -69,6 +94,8 @@ export const nextFib = (m: bigint): bigint => {
  */
 const nextFibHelper = (prevFib: bigint, curFib: bigint, m: bigint): bigint => {
   // TODO: implement this in problem 4
-  throw new Error(
-      `nextFibHelper(${prevFib}, ${curFib}, ${m}) is not yet implemented`);
+    if (curFib >= m) {
+      return curFib
+    }
+    return nextFibHelper(curFib, prevFib + curFib, m);
 };
